@@ -11,10 +11,6 @@ class Main extends Component {
     this.props.createProduct(name, price);
   };
 
-  handleClick = (event) => {
-    this.props.purchaseProduct(event.target.name, event.target.value);
-  };
-
   render() {
     return (
       <div id="content" style={{
@@ -78,16 +74,18 @@ class Main extends Component {
                   </td>
                   <td>{product.owner}</td>
                   <td>
-                    {!product.purchasaed ? (
-                      <button
-                        className="buyButton"
-                        name={product.id}
-                        value={product.price}
-                        onClick={this.handleClick}
-                      >
-                        Buy
-                      </button>
-                    ) : null}
+                     { !product.purchased
+                      ? <button
+                          name={product.id}
+                          value={product.price}
+                          onClick={(event) => {
+                            this.props.purchaseProduct(event.target.name, event.target.value)
+                          }}
+                        >
+                          Buy
+                        </button>
+                      : null
+                    }
                   </td>
                 </tr>
               );
