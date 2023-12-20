@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import Web3 from "web3";
 
 import "./App.css";
+import Marketplace from "../abis/Marketplace.json";
 import Navbar from "./Navbar";
 import Main from "./Main";
-import Marketplace from "../abis/Marketplace.json";
 
 class App extends Component {
   async componentWillMount() {
@@ -27,7 +27,6 @@ class App extends Component {
 
   async loadBlockchainData() {
     const web3 = window.web3;
- 
     const accounts = await web3.eth.getAccounts();
     this.setState({ account: accounts[0] });
     const networkId = await web3.eth.net.getId();
@@ -40,7 +39,6 @@ class App extends Component {
       this.setState({ marketplace });
       const productCount = await marketplace.methods.productCount().call();
       this.setState({ productCount });
-
       for (var i = 1; i <= productCount; i++) {
         const product = await marketplace.methods.products(i).call();
         this.setState({
@@ -88,7 +86,9 @@ class App extends Component {
 
   render() {
     return (
+      
       <div>
+        <title>Marketplace</title>
         <Navbar account={this.state.account} />
         <div className="container-fluid mt-5">
           <div className="row">
@@ -102,7 +102,6 @@ class App extends Component {
                   products={this.state.products}
                   createProduct={this.createProduct}
                   purchaseProduct={this.purchaseProduct}
-                  account={this.state.account}
                 />
               )}
             </main>
